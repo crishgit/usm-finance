@@ -12,16 +12,20 @@ using namespace std;
 // test first
 class Debt {
 private:
+    // init values -> 
     int initial_debt;
-    int ammount;
     int interest;
     int time;
     int payment;
+
+    // current values ->
+    int ammount;
     // actual refers to the interest/debt paid for the current month ->
     int current_interest_paid;
     int current_debt_paid;
     int time_passed;
-    int ammount_paid;
+    int total_paid;
+    int total_interest_paid;
     // vector <int> extraordinary_ammounts;
 
 public:
@@ -31,10 +35,11 @@ public:
         this->interest = interest;
         this->time = time;
         this->payment = (ammount * interest) / (1 - pow(1 + interest, -time));
-        this->actual_interest_paid = 0;
-        this->actual_debt_paid = 0;
+        this->current_interest_paid = 0;
+        this->current_debt_paid = 0;
         this->time_passed = 0;
-        this->ammount_paid = 0;
+        this->total_paid = 0;
+        this->total_interest_paid = 0;
     }
 
     void passMonth() {
@@ -43,10 +48,12 @@ public:
         }
 
         this->time_passed++;
-        this->actual_interest_paid = this->ammount * this->interest;
-        this->actual_debt_paid = this->payment - this->actual_interest_paid;
-        this->ammount_paid += this->payment;
-        this->ammount -= this->actual_debt_paid;
+        this->current_interest_paid = (this->ammount) * (this->interest);
+        this->current_debt_paid = (this->payment) - (this->current_interest_paid);
+        this->ammount -= this->current_debt_paid;
+
+        this->total_paid += this->current_debt_paid;
+        this->total_interest_paid += this->current_interest_paid;
 
         // extraordinary_ammounts there
     }
@@ -55,9 +62,10 @@ public:
         map<string, int> data;
 
         data["time_passed"] = this->time_passed;
-        data["actual_interest_paid"] = this->actual_interest_paid;
-        data["actual_debt_paid"] = this->actual_debt_paid;
-        data["ammount_paid"] = this->ammount_paid;
+        data["current_interest_paid"] = this->current_interest_paid;
+        data["current_debt_paid"] = this->current_debt_paid;
+        data["total_paid"] = this->total_paid;
+        data["total_interest_paid"] = this->total_interest_paid;
         data["ammount"] = this->ammount;
 
         return data;
