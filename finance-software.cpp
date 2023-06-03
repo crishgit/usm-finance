@@ -48,14 +48,22 @@ public:
     }
 
     void passMonth() {
-        if( (this->time_passed) > (this->time) ){
+        if( (this->time_passed) > (this->time) or (this->ammount) <= 0){
             return;
         }
 
         this->time_passed++;
         this->current_interest_paid = (this->ammount) * (this->interest);
         this->current_debt_paid = (this->payment) - (this->current_interest_paid);
-        this->ammount -= this->current_debt_paid;
+
+        int pay_ammount = this->ammount - this->current_debt_paid;
+        if(pay_ammount < 0.0000001 ){
+            this->current_debt_paid = this->ammount;
+            this->ammount = 0;
+        }
+        else{
+            this->ammount -= this->current_debt_paid;
+        }
 
         this->current_extraordinary_pay = extraordinary_pays[this->time_passed];
         if(this->current_extraordinary_pay > 0){
@@ -94,6 +102,10 @@ public:
     map<int, double> getExtraordinaryPays() {
         return this->extraordinary_pays;
     }
+
+    bool haveDebt() {
+        return (this->ammount > 0) ? true : false;
+    }
 };
 
 int main(){
@@ -109,7 +121,7 @@ int main(){
     cout << "Payment: " << initial_data["payment"] << endl;
     cout << endl;
 
-    for(int month = 1; month <= 24; month++){
+    for(int month = 1; user_debt.haveDebt() ; month++){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
         cout << "Month: " << data["time_passed"] << endl;
