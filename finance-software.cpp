@@ -36,7 +36,7 @@ public:
         this->ammount_paid = 0;
     }
 
-    void pass_month() {
+    void passMonth() {
         if(this->time_passed > this->time){
             return;
         }
@@ -50,7 +50,7 @@ public:
         // extraordinary_ammounts there
     }
 
-    map<string, int> get_month_data() {
+    map<string, int> getMonthData() {
         map<string, int> data;
 
         data["time_passed"] = this->time_passed;
@@ -62,7 +62,7 @@ public:
         return data;
     }
 
-    map<string, int> get_initial_data() {
+    map<string, int> getInitialData() {
         map<string, int> data;
 
         data["initial_debt"] = this->initial_debt;
