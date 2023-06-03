@@ -49,13 +49,9 @@ public:
         // extraordinary_ammounts there
     }
 
-    map<string, int> month_data() {
+    map<string, int> get_month_data() {
         map<string, int> data;
 
-        data["initial_debt"] = this->initial_debt;
-        data["time"] = this->time;
-        data["interest"] = this->interest;
-        data["payment"] = this->payment;
         data["time_passed"] = this->time_passed;
         data["actual_interest_paid"] = this->actual_interest_paid;
         data["actual_debt_paid"] = this->actual_debt_paid;
@@ -65,6 +61,16 @@ public:
         return data;
     }
 
+    map<string, int> get_initial_data() {
+        map<string, int> data;
+
+        data["initial_debt"] = this->initial_debt;
+        data["time"] = this->time;
+        data["interest"] = this->interest;
+        data["payment"] = this->payment;
+
+        return data;
+    }
 };
 
 int main(){
