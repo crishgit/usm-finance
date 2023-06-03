@@ -18,6 +18,7 @@ private:
     double time;
     double payment;
     map<int, double> extraordinary_pays;
+    double total_extraordinary_pay;
 
     // current values ->
     double ammount;
@@ -26,8 +27,18 @@ private:
     double current_debt_paid;
     double time_passed;
     double current_extraordinary_pay;
+    double real_extraordinary_pay;
+    double left_extraordinary_pay;
     double total_paid;
     double total_interest_paid;
+
+    double getExtraordinaryTotal() {
+        double total = 0;
+        for(auto const& pair : this->extraordinary_pays) {
+            total += pair.second;
+        }
+        return total;
+    }
 
 public:
     Debt (double ammount, double interest, double time, map<int, double> extraordinary_pays = {}){
@@ -37,12 +48,15 @@ public:
         this->payment = (ammount * (this->interest)) 
             / (1 - pow(1 + (this->interest), -time));
         this->extraordinary_pays = extraordinary_pays;
+        this->total_extraordinary_pay = this->getExtraordinaryTotal();
 
         this->ammount = ammount;
         this->current_interest_paid = 0;
         this->current_debt_paid = 0;
         this->time_passed = 0;
         this->current_extraordinary_pay = 0;
+        this->real_extraordinary_pay = 0;
+        this->left_extraordinary_pay = this->total_extraordinary_pay;
         this->total_paid = 0;
         this->total_interest_paid = 0;
     }
@@ -56,21 +70,30 @@ public:
         this->current_interest_paid = (this->ammount) * (this->interest);
         this->current_debt_paid = (this->payment) - (this->current_interest_paid);
 
-        int pay_ammount = this->ammount - this->current_debt_paid;
-        if(pay_ammount < 0.0000001 ){
+        int debt_result = abs(this->ammount - this->current_debt_paid);
+        double delta_error_range = 0.00001;
+
+        if (debt_result < delta_error_range) {
             this->current_debt_paid = this->ammount;
             this->ammount = 0;
-        }
-        else{
-            this->ammount -= this->current_debt_paid;
+        } 
+        else {
+          this->ammount -= this->current_debt_paid;
         }
 
         this->current_extraordinary_pay = extraordinary_pays[this->time_passed];
-        if(this->current_extraordinary_pay > 0){
+        debt_result = abs(this->ammount - this->current_extraordinary_pay);
+        if(debt_result < delta_error_range) {
+            this->real_extraordinary_pay = this->ammount;
+            this->ammount = 0;
+        }
+        else {
+            this->real_extraordinary_pay = this->current_extraordinary_pay;
             this->ammount -= this->current_extraordinary_pay;
         }
         
-        this->total_paid += this->current_debt_paid;
+        this->left_extraordinary_pay -= this->real_extraordinary_pay;
+        this->total_paid += this->current_debt_paid + this->real_extraordinary_pay;
         this->total_interest_paid += this->current_interest_paid;
     }
 
@@ -84,6 +107,8 @@ public:
         data["total_interest_paid"] = this->total_interest_paid;
         data["ammount"] = this->ammount;
         data["current_extraordinary_pay"] = this->current_extraordinary_pay;
+        data["real_extraordinary_pay"] = this->real_extraordinary_pay;
+        data["left_extraordinary_pay"] = this->left_extraordinary_pay;
 
         return data;
     }
@@ -95,6 +120,7 @@ public:
         data["time"] = this->time;
         data["interest"] = this->interest;
         data["payment"] = this->payment;
+        data["total_extraordinary_pay"] = this->total_extraordinary_pay;
 
         return data;
     }
@@ -109,9 +135,10 @@ public:
 };
 
 int main(){
-    // test case: 
-    // Debt user_debt(20000, 3, 24);
-    Debt user_debt(20000, 3, 24);
+    map<int, double> extraordinary_pays = {
+        {12, 3000.0},
+    };
+    Debt user_debt(20000, 3, 24, extraordinary_pays);
 
     cout << "Initial Values: " << endl;
     map<string, double> initial_data = user_debt.getInitialData();
@@ -130,7 +157,9 @@ int main(){
         cout << "Total paid: " << data["total_paid"] << endl;
         cout << "Total interest paid: " << data["total_interest_paid"] << endl;
         cout << "Ammount: " << data["ammount"] << endl;
-        cout << "Extraordinary pay: " << data["current_extraordinary_pay"] << endl;
+        cout << "Current extraordinary pay: " << data["current_extraordinary_pay"] << endl;
+        cout << "Real extraordinary pay: " << data["real_extraordinary_pay"] << endl;
+        cout << "Left extraordinary pay: " << data["left_extraordinary_pay"] << endl;
         cout << endl;
     }
 
