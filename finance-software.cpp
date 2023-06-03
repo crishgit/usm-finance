@@ -8,6 +8,7 @@ using namespace std;
 // the extraordinary ammounts are (ammount, month) and substract them from the debt
 // cláusula cuando en un mes, el monto extraodinario + pago mensual es mayor a la deuda restante
 // falta: total interes pagados
+// test first
 class Debt {
 private:
     int initial_debt;
@@ -74,5 +75,7 @@ public:
 };
 
 int main(){
+    // test case: 
+    // Debt user_debt(20000, 3, 24);
     return 0;
 }
