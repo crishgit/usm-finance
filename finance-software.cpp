@@ -7,37 +7,42 @@ using namespace std;
 
 // add extraordinary ammounts to a given time of the month
 // the extraordinary ammounts are (ammount, month) and substract them from the debt
+// extraordinary months can't be in a month greather than the time of the debt
 // cláusula cuando en un mes, el monto extraodinario + pago mensual es mayor a la deuda restante
-// falta: total interes pagados
 // test first
 class Debt {
 private:
     // init values -> 
-    int initial_debt;
-    int interest;
-    int time;
-    int payment;
+    double initial_debt;
+    double interest;
+    double time;
+    double payment;
+    map<int, double> extraordinary_pays;
 
     // current values ->
-    int ammount;
+    double ammount;
     // actual refers to the interest/debt paid for the current month ->
-    int current_interest_paid;
-    int current_debt_paid;
-    int time_passed;
-    int total_paid;
-    int total_interest_paid;
-    // vector <int> extraordinary_ammounts;
+    double current_interest_paid;
+    double current_debt_paid;
+    double time_passed;
+    double current_extraordinary_pay;
+    double total_paid;
+    double total_interest_paid;
 
 public:
-    Debt (int ammount, int interest, int time){
+    Debt (double ammount, double interest, double time, map<int, double> extraordinary_pays = {}){
         this->initial_debt= ammount;
-        this->ammount = ammount;
-        this->interest = interest;
+        this->interest = interest / 100.0;
         this->time = time;
-        this->payment = (ammount * interest) / (1 - pow(1 + interest, -time));
+        this->payment = (ammount * (this->interest)) 
+            / (1 - pow(1 + (this->interest), -time));
+        this->extraordinary_pays = extraordinary_pays;
+
+        this->ammount = ammount;
         this->current_interest_paid = 0;
         this->current_debt_paid = 0;
         this->time_passed = 0;
+        this->current_extraordinary_pay = 0;
         this->total_paid = 0;
         this->total_interest_paid = 0;
     }
@@ -52,14 +57,17 @@ public:
         this->current_debt_paid = (this->payment) - (this->current_interest_paid);
         this->ammount -= this->current_debt_paid;
 
+        this->current_extraordinary_pay = extraordinary_pays[this->time_passed];
+        if(this->current_extraordinary_pay > 0){
+            this->ammount -= this->current_extraordinary_pay;
+        }
+        
         this->total_paid += this->current_debt_paid;
         this->total_interest_paid += this->current_interest_paid;
-
-        // extraordinary_ammounts there
     }
 
-    map<string, int> getMonthData() {
-        map<string, int> data;
+    map<string, double> getCurrentMonthData() {
+        map<string, double> data;
 
         data["time_passed"] = this->time_passed;
         data["current_interest_paid"] = this->current_interest_paid;
@@ -67,12 +75,13 @@ public:
         data["total_paid"] = this->total_paid;
         data["total_interest_paid"] = this->total_interest_paid;
         data["ammount"] = this->ammount;
+        data["current_extraordinary_pay"] = this->current_extraordinary_pay;
 
         return data;
     }
 
-    map<string, int> getInitialData() {
-        map<string, int> data;
+    map<string, double> getInitialData() {
+        map<string, double> data;
 
         data["initial_debt"] = this->initial_debt;
         data["time"] = this->time;
@@ -81,10 +90,38 @@ public:
 
         return data;
     }
+
+    map<int, double> getExtraordinaryPays() {
+        return this->extraordinary_pays;
+    }
 };
 
 int main(){
     // test case: 
     // Debt user_debt(20000, 3, 24);
+    Debt user_debt(20000, 3, 24);
+
+    cout << "Initial Values: " << endl;
+    map<string, double> initial_data = user_debt.getInitialData();
+    cout << "Initial debt: " << initial_data["initial_debt"] << endl;
+    cout << "Time: " << initial_data["time"] << endl;
+    cout << "Interest: " << initial_data["interest"] << endl;
+    cout << "Payment: " << initial_data["payment"] << endl;
+    cout << endl;
+
+    for(int month = 1; month <= 24; month++){
+        user_debt.passMonth();
+        map<string, double> data = user_debt.getCurrentMonthData();
+        cout << "Month: " << data["time_passed"] << endl;
+        cout << "Interest paid: " << data["current_interest_paid"] << endl;
+        cout << "Debt paid: " << data["current_debt_paid"] << endl;
+        cout << "Total paid: " << data["total_paid"] << endl;
+        cout << "Total interest paid: " << data["total_interest_paid"] << endl;
+        cout << "Ammount: " << data["ammount"] << endl;
+        cout << "Extraordinary pay: " << data["current_extraordinary_pay"] << endl;
+        cout << endl;
+    }
+
+
     return 0;
 }
