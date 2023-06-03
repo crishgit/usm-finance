@@ -1,7 +1,8 @@
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <string>
 #include <map>
+#include <iostream>
 using namespace std;
 
 // add extraordinary ammounts to a given time of the month
@@ -16,9 +17,9 @@ private:
     int interest;
     int time;
     int payment;
-    // actual refered to the interes/debt paid for the current month ->
-    int actual_interest_paid;
-    int actual_debt_paid;
+    // actual refers to the interest/debt paid for the current month ->
+    int current_interest_paid;
+    int current_debt_paid;
     int time_passed;
     int ammount_paid;
     // vector <int> extraordinary_ammounts;
@@ -37,7 +38,7 @@ public:
     }
 
     void passMonth() {
-        if(this->time_passed > this->time){
+        if( (this->time_passed) > (this->time) ){
             return;
         }
 
