@@ -5,11 +5,47 @@
 #include <iostream>
 using namespace std;
 
-// add extraordinary ammounts to a given time of the month
-// the extraordinary ammounts are (ammount, month) and substract them from the debt
-// extraordinary months can't be in a month greather than the time of the debt
-// cláusula cuando en un mes, el monto extraodinario + pago mensual es mayor a la deuda restante
-// test first
+/*
+Use:
+    Debt class that stores the debt data and calculates the debt evolution
+
+Template Parameters:
+    double ammount: the ammount of money that the user owes
+    double interest: the interest rate of the debt (n%, 'n' it's the value)
+    double time: the time that the user has to pay the debt (in months)
+
+Public Methods:
+    map<string,double> getInitialData: returns the initial data of the debt
+        output: {
+            "initial_debt": ,
+            "time": ,
+            "interest": ,
+            "payment": the payment that the user has to pay each month,
+            "total_extraordinary_pay": total sum of the extraordinary pays
+        }
+
+    map<string,double> getCurrentMonthData: returns data of the current month 
+        output: {
+            "time_passed": month that has passed paying the debt,
+            "current_interest_paid": interest paid that month,
+            "current_debt_paid": debt paid that month,
+            "total_paid": total debt substract to that month,
+            "total_interest_paid": total interest paid to that month,
+            "ammount": debt left to pay,
+            "current_extraordinary_pay": extraodinary of that mounth,
+            "real_extraordinary_pay": amount used of the extraordinary pay,
+            "left_extraordinary_pay": extraordinary pay left to use
+        }
+
+    void passMonth: pass a month in the debt evolution
+    bool haveDebt: returns true if the user still have debt, false otherwise
+    map<int,double> getExtraordinaryPays: returns all the extraordinary pays of the debt
+
+Notes:
+    I need to include a epsilon amount in passMonth to avoid the error of the double when the debt reach 0 after the pay.
+
+*/
+
 class Debt {
 private:
     // init values -> 
@@ -71,27 +107,25 @@ public:
         this->current_debt_paid = (this->payment) - (this->current_interest_paid);
 
         int debt_result = abs(this->ammount - this->current_debt_paid);
-        double delta_error_range = 0.00001;
+        double epsilon_error_range = 0.00001;
 
-        if (debt_result < delta_error_range) {
-            this->current_debt_paid = this->ammount;
-            this->ammount = 0;
-        } 
-        else {
+        if (debt_result < epsilon_error_range) {
+          this->current_debt_paid = this->ammount;
+          this->ammount = 0;
+        } else {
           this->ammount -= this->current_debt_paid;
         }
 
         this->current_extraordinary_pay = extraordinary_pays[this->time_passed];
         debt_result = abs(this->ammount - this->current_extraordinary_pay);
-        if(debt_result < delta_error_range) {
-            this->real_extraordinary_pay = this->ammount;
-            this->ammount = 0;
+        if (debt_result < epsilon_error_range) {
+          this->real_extraordinary_pay = this->ammount;
+          this->ammount = 0;
+        } else {
+          this->real_extraordinary_pay = this->current_extraordinary_pay;
+          this->ammount -= this->current_extraordinary_pay;
         }
-        else {
-            this->real_extraordinary_pay = this->current_extraordinary_pay;
-            this->ammount -= this->current_extraordinary_pay;
-        }
-        
+
         this->left_extraordinary_pay -= this->real_extraordinary_pay;
         this->total_paid += this->current_debt_paid + this->real_extraordinary_pay;
         this->total_interest_paid += this->current_interest_paid;
