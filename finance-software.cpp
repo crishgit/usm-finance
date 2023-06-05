@@ -7,11 +7,11 @@
 using namespace std;
 
 /*  
-Use:
+## Use:
     Debt class that stores the debt data and calculates the debt evolution
     * need 'cmath' librery to use pow function
 
-Use Case:
+## Use Case:
     // debt with 1000€, 10% interest, 12 months to pay and 3 extraordinary pays
     Debt my_debt(1000.0, 10.0, 12, {
         {1, 100},
@@ -29,7 +29,7 @@ Use Case:
     current_month["current_interest_paid"];
 
 
-Template Parameters:
+## Template Parameters:
     double ammount: the ammount of money that the user owes
     double interest: the interest rate of the debt (n%, 'n' it's the value)
     double time: the time that the user has to pay the debt (in months)
@@ -41,7 +41,7 @@ Template Parameters:
             ...
         }
 
-Public Methods:
+## Public Methods:
     map<string,double> getInitialData: returns the initial data of the debt
         output: {
             "initial_debt": ,
@@ -68,7 +68,7 @@ Public Methods:
     bool haveDebt: returns true if the user still have debt, false otherwise
     map<int,double> getExtraordinaryPays: returns all the extraordinary pays of the debt
 
-Notes:
+## Notes:
     I need to include a epsilon amount in passMonth to avoid the error of the double when the debt reach 0 after the pay.
 
 */
