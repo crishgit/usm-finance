@@ -12,21 +12,21 @@ Use:
     * need 'cmath' librery to use pow function
 
 Use Case:
-// debt with 1000€, 10% interest, 12 months to pay and 3 extraordinary pays
-Debt my_debt(1000.0, 10.0, 12, {
-    {1, 100},
-    {3, 200},
-    {6, 300}
-});
-// to evolution the debt 
-my_debt.passMonth();
-// to get the data of the current months
-map<string, double> current_month = my_debt.getCurrentMonthData();
-// to get the initial data of the debt
-my_debt.getInitialData();
-// to access to the data of current months
-current_month["time_passed"]; 
-current_month["current_interest_paid"];
+    // debt with 1000€, 10% interest, 12 months to pay and 3 extraordinary pays
+    Debt my_debt(1000.0, 10.0, 12, {
+        {1, 100},
+        {3, 200},
+        {6, 300}
+    });
+    // to evolution the debt 
+    my_debt.passMonth();
+    // to get the data of the current months
+    map<string, double> current_month = my_debt.getCurrentMonthData();
+    // to get the initial data of the debt
+    my_debt.getInitialData();
+    // to access to the data of current months
+    current_month["time_passed"]; 
+    current_month["current_interest_paid"];
 
 
 Template Parameters:
