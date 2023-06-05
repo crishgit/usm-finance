@@ -3,9 +3,10 @@
 #include <string>
 #include <map>
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
-/*
+/*  
 Use:
     Debt class that stores the debt data and calculates the debt evolution
     * need 'cmath' librery to use pow function
@@ -195,10 +196,14 @@ public:
 };
 
 int main(){
+
+    // ------------------ table ------------------ // 
     map<int, double> extraordinary_pays = {
         {12, 3000.0},
     };
-    Debt user_debt(20000, 3, 24, extraordinary_pays);
+
+    Debt user_debt(20000, 3, 3, extraordinary_pays);
+
 
     cout << "Initial Values: " << endl;
     map<string, double> initial_data = user_debt.getInitialData();
@@ -208,21 +213,32 @@ int main(){
     cout << "Payment: " << initial_data["payment"] << endl;
     cout << endl;
 
+    // ------ Header ------- //
+    cout << setfill(' ') << setw(5) << " Month ";
+    cout << setfill(' ') << setw(15) << " Interest paid ";
+    cout << setfill(' ') << setw(11) << " Debt paid ";
+    cout << setfill(' ') << setw(12) << " Total paid ";
+    cout << setfill(' ') << setw(21) << " Total interest paid ";
+    cout << setfill(' ') << setw(9) << " Ammount ";
+    cout << setfill(' ') << setw(27) << " Current extraordinary pay ";
+    cout << setfill(' ') << setw(24) << " Real extraordinary pay ";
+    cout << setfill(' ') << setw(24) << " Left extraordinary pay ";
+    cout << endl;
+
     for(int month = 1; user_debt.haveDebt() ; month++){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
-        cout << "Month: " << data["time_passed"] << endl;
-        cout << "Interest paid: " << data["current_interest_paid"] << endl;
-        cout << "Debt paid: " << data["current_debt_paid"] << endl;
-        cout << "Total paid: " << data["total_paid"] << endl;
-        cout << "Total interest paid: " << data["total_interest_paid"] << endl;
-        cout << "Ammount: " << data["ammount"] << endl;
-        cout << "Current extraordinary pay: " << data["current_extraordinary_pay"] << endl;
-        cout << "Real extraordinary pay: " << data["real_extraordinary_pay"] << endl;
-        cout << "Left extraordinary pay: " << data["left_extraordinary_pay"] << endl;
+        cout << setfill(' ') << setw(10) << "Month: " << data["time_passed"];
+        cout << "Interest paid: " << data["current_interest_paid"];
+        cout << "Debt paid: " << data["current_debt_paid"];
+        cout << "Total paid: " << data["total_paid"];
+        cout << "Total interest paid: " << data["total_interest_paid"];
+        cout << "Ammount: " << data["ammount"];
+        cout << "Current extraordinary pay: " << data["current_extraordinary_pay"];
+        cout << "Real extraordinary pay: " << data["real_extraordinary_pay"];
+        cout << "Left extraordinary pay: " << data["left_extraordinary_pay"];
         cout << endl;
     }
-
 
     return 0;
 }
