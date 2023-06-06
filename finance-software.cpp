@@ -238,7 +238,7 @@ int main(){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
 
-        cout << setfill(' ') << setw(10) << "Month: " << data["time_passed"];
+        cout << setfill(' ') << setw(10) << setprecision(0) << data["time_passed"];
         cout << "Interest paid: " << data["current_interest_paid"];
         cout << "Debt paid: " << data["current_debt_paid"];
         cout << "Total paid: " << data["total_debt_paid"] + data["total_interest_paid"];
