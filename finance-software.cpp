@@ -222,15 +222,15 @@ int main(){
 
     // ------ Header ------- // 
     // Put Total Paid first  
-    cout << setfill(' ') << setw(5) << "Mes";
-    cout << setfill(' ') << setw(15) << "Interes pagado";
-    cout << setfill(' ') << setw(13) << "Deuda pagada";
-    cout << setfill(' ') << setw(13) << "Total pagado";
-    cout << setfill(' ') << setw(21) << "Total interes pagado";
-    cout << setfill(' ') << setw(10) << "Deuda";
+    cout << setfill(' ') << setw(4) << "Mes";
+    cout << setfill(' ') << setw(17) << "Interes pagado";
+    cout << setfill(' ') << setw(15) << "Deuda pagada";
+    cout << setfill(' ') << setw(15) << "Total pagado";
+    cout << setfill(' ') << setw(22) << "Total interes pagado";
+    cout << setfill(' ') << setw(12) << "Deuda";
     // not needed ->
     // cout << setfill(' ') << setw(27) << " Current extraordinary pay ";
-    cout << setfill(' ') << setw(20) << "Pago extraordinario";
+    cout << setfill(' ') << setw(22) << "Pago extraordinario";
     // cout << setfill(' ') << setw(24) << " Left extraordinary pay ";
     cout << endl;
 
@@ -238,15 +238,15 @@ int main(){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
 
-        cout << setfill(' ') << setw(5) << setprecision(0) << data["time_passed"];
-        cout << setw(15) << setprecision(2) << data["current_interest_paid"];
-        cout << setw(13) << data["current_debt_paid"];
-        cout << setw(13) << data["total_debt_paid"] + data["total_interest_paid"];
-        cout << setw(21) << data["total_interest_paid"];
-        cout << setw(10) << data["ammount"];
+        cout << setfill(' ') << setw(4) << setprecision(0) << data["time_passed"];
+        cout << setw(17) << setprecision(2) << data["current_interest_paid"];
+        cout << setw(15) << data["current_debt_paid"];
+        cout << setw(15) << data["total_debt_paid"] + data["total_interest_paid"];
+        cout << setw(22) << data["total_interest_paid"];
+        cout << setw(12) << data["ammount"];
         // not needed ->
         // cout << "Current extraordinary pay: " << data["current_extraordinary_pay"];
-        cout << setw(20) << data["real_extraordinary_pay"];
+        cout << setw(22) << data["real_extraordinary_pay"];
         // cout << << data["left_extraordinary_pay"];
         cout << endl;
     }
