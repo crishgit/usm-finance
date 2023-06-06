@@ -209,7 +209,7 @@ int main(){
     // Reference format:
     // Préstamo de 20000.00$, a un interés del 3.00% durante 3 meses. Cuota inicial de 583.33$.
     // Cuota extraordinaria de 3000.00$ en el mes 12.
-    cout << "Préstamo de " 
+    cout << endl << " Préstamo de " 
         << fixed << setprecision(2) << intial_data["initial_debt"] << "$, "
         << "a un interés del "
         << fixed << setprecision(2) << intial_data["interest"] * 100.0 << "% "
@@ -222,32 +222,32 @@ int main(){
 
     // ------ Header ------- // 
     // Put Total Paid first  
-    cout << setfill(' ') << setw(5) << " Month ";
-    cout << setfill(' ') << setw(15) << " Interest paid ";
-    cout << setfill(' ') << setw(11) << " Debt paid ";
-    cout << setfill(' ') << setw(12) << " Total paid ";
-    cout << setfill(' ') << setw(21) << " Total interest paid ";
-    cout << setfill(' ') << setw(9) << " Ammount ";
+    cout << setfill(' ') << setw(5) << "Mes";
+    cout << setfill(' ') << setw(15) << "Interes pagado";
+    cout << setfill(' ') << setw(13) << "Deuda pagada";
+    cout << setfill(' ') << setw(13) << "Total pagado";
+    cout << setfill(' ') << setw(21) << "Total interes pagado";
+    cout << setfill(' ') << setw(10) << "Deuda";
     // not needed ->
     // cout << setfill(' ') << setw(27) << " Current extraordinary pay ";
-    cout << setfill(' ') << setw(24) << " Real extraordinary pay ";
-    cout << setfill(' ') << setw(24) << " Left extraordinary pay ";
+    cout << setfill(' ') << setw(20) << "Pago extraordinario";
+    // cout << setfill(' ') << setw(24) << " Left extraordinary pay ";
     cout << endl;
 
     for(int month = 1; user_debt.haveDebt() ; month++){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
 
-        cout << setfill(' ') << setw(10) << setprecision(0) << data["time_passed"];
-        cout << "Interest paid: " << data["current_interest_paid"];
-        cout << "Debt paid: " << data["current_debt_paid"];
-        cout << "Total paid: " << data["total_debt_paid"] + data["total_interest_paid"];
-        cout << "Total interest paid: " << data["total_interest_paid"];
-        cout << "Ammount: " << data["ammount"];
+        cout << setfill(' ') << setw(5) << setprecision(0) << data["time_passed"];
+        cout << setw(15) << setprecision(2) << data["current_interest_paid"];
+        cout << setw(13) << data["current_debt_paid"];
+        cout << setw(13) << data["total_debt_paid"] + data["total_interest_paid"];
+        cout << setw(21) << data["total_interest_paid"];
+        cout << setw(10) << data["ammount"];
         // not needed ->
         // cout << "Current extraordinary pay: " << data["current_extraordinary_pay"];
-        cout << "Real extraordinary pay: " << data["real_extraordinary_pay"];
-        cout << "Left extraordinary pay: " << data["left_extraordinary_pay"];
+        cout << setw(20) << data["real_extraordinary_pay"];
+        // cout << << data["left_extraordinary_pay"];
         cout << endl;
     }
 
