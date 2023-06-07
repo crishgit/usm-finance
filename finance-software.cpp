@@ -361,7 +361,7 @@ int main(){
             extraordinary_pays.insert(make_pair(key, value));
             cout << "Quieres añadir otro pago extraordinario? (si/no):";
             cin >> xpay;
-        };
+            };
 
         run = false;
         printTable(debt, interest, time, extraordinary_pays);
