@@ -280,7 +280,6 @@ int main(){
     string xpay;
     int xpaytime;
     double xpayvalue;
-    string addAnother;
 
     cout << "Este programa te ayuda a calcular cuanto debes pagar para saldar una deuda pagando mensualmente, tomando en cuenta el interes y los pagos extraordinarios" << endl;
     while (run){
@@ -292,21 +291,13 @@ int main(){
     cin >> time;
     cout << "Se realizo algun pago extraordinario? (si/no):";
     cin >> xpay;
-    if (xpay == "si"){
-      repeat:
+    while(xpay == "si"){
       addXpay(xpaytime, xpayvalue);
       cout << "you want to add another extraordinary pay? (si/no):";
-      cin >> addAnother;
-      if (addAnother == "si"){
-        goto repeat;
-      }
-      run = false;
-      printTable();
-    } else {
-      cout << "ok chao";
-      run = false;
-      printTable();
+      cin >> xpay;
     }
+      run = false;
+      printTable();
     } // here ends the while
 
     return 0;
