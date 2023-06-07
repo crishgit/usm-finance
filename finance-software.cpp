@@ -282,27 +282,30 @@ int main(){
 
     cout << "Este programa te ayuda a calcular cuanto debes pagar para saldar una deuda pagando mensualmente, tomando en cuenta el interes y los pagos extraordinarios" << endl;
     while (run){
-    cout << "Ingresa monto de la deuda: ";
-    cin >> debt;
-    cout << "Ingresa el porcentaje de interes (solo el numero):";
-    cin >> interest;
-    cout << "Ingresa la cantidad de meses para pagar la deuda:";
-    cin >> time;
-    cout << "Se realizo algun pago extraordinario? (si/no):";
-    cin >> xpay;
-    while(xpay == "si"){
-      int key;
-      double value;
-      cout << "ingrese el numnero del mes del pago extraordinario:";
-      cin >> key;
-      cout << "ingrese el monto correspondiente a ese mes:";
-      cin >> value;
-      extraordinary_pays.insert(make_pair(key, value));
-      cout << "Quieres añadir otro pago extraordinario? (si/no):";
-      cin >> xpay;
-    }; // ends the xpay while
-      run = false;
-      printTable(debt, interest, time, extraordinary_pays);
-    } // here ends the run while
+        cout << "Ingrese monto de la deuda: ";
+        cin >> debt;
+        cout << "Ingrese el porcentaje de interes (solo el numero): ";
+        cin >> interest;
+        cout << "Ingrese la cantidad de meses para pagar la deuda: ";
+        cin >> time;
+        cout << "Se realizo algun pago extraordinario? (si/no): ";
+        cin >> xpay;
+        
+        while(xpay == "si" or xpay == "s" or xpay == "y" or xpay == "Y"){
+            int key;
+            double value;
+            cout << "Ingrese el numnero del mes del pago extraordinario: ";
+            cin >> key;
+            cout << "Ingrese el monto correspondiente a ese mes: ";
+            cin >> value;
+            extraordinary_pays.insert(make_pair(key, value));
+            cout << "Quieres añadir otro pago extraordinario? (si/no):";
+            cin >> xpay;
+        };
+
+        run = false;
+        printTable(debt, interest, time, extraordinary_pays);
+    } 
+    
     return 0;
 }
