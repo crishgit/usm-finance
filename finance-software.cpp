@@ -288,11 +288,12 @@ int main(){
         while (debtCorrect == false){
         cout << "Ingrese monto de la deuda: ";
         cin >> debt;
-        cin.ignore();
+        cin.clear();
         if (typeid(debt) == typeid(double) and debt > 0) {
           debtCorrect = true;
         } else {
           cout << endl <<"valor invalido, ingrese un valor correcto"<<endl;
+          cin.ignore(100, '\n');
           }
         } 
       
@@ -301,24 +302,26 @@ int main(){
         while (interestCorrect == false){
         cout << "Ingrese procentaje de interes: ";
         cin >> interest;
-        cin.ignore();
+        cin.clear();
         if (typeid(interest) == typeid(double) and interest > 0) {
           interestCorrect= true;
         } else {
           cout << endl <<"valor invalido, ingrese un valor correcto"<< endl;
+          cin.ignore(100, '\n');
           }
         }         
           
         
       // remember put in a function later, maybe 
         while (timeCorrect == false){
-        cout << "Ingrese tiempo para pagar la deuda: ";
+        cout << "Ingrese numero de meses para pagar la deuda: ";
         cin >> time;
-        cin.ignore();
+        cin.clear();
         if (typeid(time) == typeid(int) and debt > 0) {
           timeCorrect = true;
         } else {
           cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
+          cin.ignore(100, '\n');
           }
         } 
           
@@ -333,11 +336,12 @@ int main(){
             while (keyCorrect == false){
               cout << "Ingrese numero del mes: ";
               cin >> key;
-              cin.ignore();
+              cin.clear();
               if (typeid(key) == typeid(int) and key <= time) {
                 keyCorrect = true;
               } else {
               cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
+              cin.ignore(100, '\n');
                 }
             }
 
@@ -345,11 +349,12 @@ int main(){
             while (valueCorrect == false){
             cout << "Ingrese monto correspondiente al mes: ";
             cin >> value;
-            cin.ignore();
+            cin.clear();
             if (typeid(value) == typeid(double) and value <= debt) {
               valueCorrect = true;
             } else {
               cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
+              cin.ignore(100, '\n');
               }
             }
 
