@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include <iomanip>
+#include <typeinfo>
 using namespace std;
 
 /*  
@@ -253,23 +254,14 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     // How much debt was paid 
     // How much was paid in total 
     // How much was paid in extraordinary payments 
-    // What ammount of extraordinary payments was left
-
- 
-}
-
-void addXpay (int time, double value){
-    cout << "ingrese los meses del pago extraordinario:";
-    cin >> time;
-    cout << "ingrese el monto correspondiente a ese mes:";
-    cin >> value;
+    // What ammount of extraordinary payments was left 
 }
 
 int main(){
 
     // ------------------ input ------------------ //
     
-    // ------ vars ------- //
+    // ------ variables ------- //
     bool run = true;
     double debt;
     double interest;
@@ -280,24 +272,87 @@ int main(){
     double xpayvalue;
     map<int, double>extraordinary_pays;
 
-    cout << "Este programa te ayuda a calcular cuanto debes pagar para saldar una deuda pagando mensualmente, tomando en cuenta el interes y los pagos extraordinarios" << endl;
+    // -------- input variables ---------- //
+    bool debtCorrect = false;
+    bool timeCorrect = false;
+    bool interestCorrect = false;
+    bool keyCorrect = false;
+    bool valueCorrect = false;
+    
+    // ---------- starts program -------------- // 
+    cout << endl << "Este programa te ayuda a calcular cuanto debes pagar para saldar una deuda pagando mensualmente, tomando en cuenta el interes y los pagos extraordinarios" << endl;
+
     while (run){
+
+      // remember put in a function later, maybe 
+        while (debtCorrect == false){
         cout << "Ingrese monto de la deuda: ";
         cin >> debt;
-        cout << "Ingrese el porcentaje de interes (solo el numero): ";
+        cin.ignore();
+        if (typeid(debt) == typeid(double) and debt > 0) {
+          debtCorrect = true;
+        } else {
+          cout << endl <<"valor invalido, ingrese un valor correcto"<<endl;
+          }
+        } 
+      
+ 
+      // remember put in a function later, maybe 
+        while (interestCorrect == false){
+        cout << "Ingrese procentaje de interes: ";
         cin >> interest;
-        cout << "Ingrese la cantidad de meses para pagar la deuda: ";
+        cin.ignore();
+        if (typeid(interest) == typeid(double) and interest > 0) {
+          interestCorrect= true;
+        } else {
+          cout << endl <<"valor invalido, ingrese un valor correcto"<< endl;
+          }
+        }         
+          
+        
+      // remember put in a function later, maybe 
+        while (timeCorrect == false){
+        cout << "Ingrese tiempo para pagar la deuda: ";
         cin >> time;
+        cin.ignore();
+        if (typeid(time) == typeid(int) and debt > 0) {
+          timeCorrect = true;
+        } else {
+          cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
+          }
+        } 
+          
         cout << "Se realizo algun pago extraordinario? (si/no): ";
         cin >> xpay;
         
         while(xpay == "si" or xpay == "s" or xpay == "y" or xpay == "Y"){
             int key;
             double value;
-            cout << "Ingrese el numnero del mes del pago extraordinario: ";
-            cin >> key;
-            cout << "Ingrese el monto correspondiente a ese mes: ";
+
+            // remember put in a function later, maybe 
+            while (keyCorrect == false){
+              cout << "Ingrese numero del mes: ";
+              cin >> key;
+              cin.ignore();
+              if (typeid(key) == typeid(int) and key <= time) {
+                keyCorrect = true;
+              } else {
+              cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
+                }
+            }
+
+            // remember put in a function later, maybe 
+            while (valueCorrect == false){
+            cout << "Ingrese monto correspondiente al mes: ";
             cin >> value;
+            cin.ignore();
+            if (typeid(value) == typeid(double) and value <= debt) {
+              valueCorrect = true;
+            } else {
+              cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
+              }
+            }
+
             extraordinary_pays.insert(make_pair(key, value));
             cout << "Quieres añadir otro pago extraordinario? (si/no):";
             cin >> xpay;
