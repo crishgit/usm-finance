@@ -300,13 +300,9 @@ int main(){
       extraordinary_pays.insert(make_pair(key, value));
       cout << "Quieres añadir otro pago extraordinario? (si/no):";
       cin >> xpay;
-    };
+    }; // ends the xpay while
       run = false;
-
-
-      /*map<int, double> extraordinary_pays = {
-        {3, 500},};*/
-      printTable(2000, 3, 3, extraordinary_pays);
-    } // here ends the while
+      printTable(debt, interest, time, extraordinary_pays);
+    } // here ends the run while
     return 0;
 }
