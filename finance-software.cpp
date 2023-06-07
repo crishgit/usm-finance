@@ -258,15 +258,11 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
  
 }
 
-map<int, double> addXpay (int time, double value){
+void addXpay (int time, double value){
     cout << "ingrese los meses del pago extraordinario:";
     cin >> time;
     cout << "ingrese el monto correspondiente a ese mes:";
     cin >> value;
-    map<int, double> extraordinary_pays = {
-        {time, value},
-    };
-    return extraordinary_pays;
 }
 
 int main(){
@@ -295,14 +291,22 @@ int main(){
     cout << "Se realizo algun pago extraordinario? (si/no):";
     cin >> xpay;
     while(xpay == "si"){
-      cout << "you want to add another extraordinary pay? (si/no):";
+      int key;
+      double value;
+      cout << "ingrese el numnero del mes del pago extraordinario:";
+      cin >> key;
+      cout << "ingrese el monto correspondiente a ese mes:";
+      cin >> value;
+      extraordinary_pays.insert(make_pair(key, value));
+      cout << "Quieres añadir otro pago extraordinario? (si/no):";
       cin >> xpay;
     };
       run = false;
-      map<int, double> extraordinary_pays = {
-        {xpaytime, xpayvalue},};
+
+
+      /*map<int, double> extraordinary_pays = {
+        {3, 500},};*/
       printTable(2000, 3, 3, extraordinary_pays);
     } // here ends the while
-
     return 0;
 }
