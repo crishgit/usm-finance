@@ -196,9 +196,8 @@ public:
     }
 };
 
-int main(){
-
-    // ------------------ table ------------------ // 
+void printTable() {
+     // ------------------ table ------------------ // 
     map<int, double> extraordinary_pays = {
         {12, 3000.0},
     };
@@ -257,6 +256,58 @@ int main(){
     // How much was paid in total 
     // How much was paid in extraordinary payments 
     // What ammount of extraordinary payments was left
+
+ 
+}
+
+void addXpay (int time, double value){
+    cout << "ingrese los meses del pago extraordinario:";
+    cin >> time;
+    cout << "ingrese el monto correspondiente a ese mes:";
+    cin >> value; 
+}
+
+int main(){
+
+    // ------------------ input ------------------ //
+    
+    // ------ vars ------- //
+    bool run = true;
+    double debt;
+    double interest;
+    int time;
+    // --- x variables --- //
+    string xpay;
+    int xpaytime;
+    double xpayvalue;
+    string addAnother;
+
+    cout << "Este programa te ayuda a calcular cuanto debes pagar para saldar una deuda pagando mensualmente, tomando en cuenta el interes y los pagos extraordinarios" << endl;
+    while (run){
+    cout << "Ingresa monto de la deuda: ";
+    cin >> debt;
+    cout << "Ingresa el porcentaje de interes (solo el numero):";
+    cin >> interest;
+    cout << "Ingresa la cantidad de meses para pagar la deuda:";
+    cin >> time;
+    cout << "Se realizo algun pago extraordinario? (si/no):";
+    cin >> xpay;
+    if (xpay == "si"){
+      repeat:
+      addXpay(xpaytime, xpayvalue);
+      cout << "you want to add another extraordinary pay? (si/no):";
+      cin >> addAnother;
+      if (addAnother == "si"){
+        goto repeat;
+      }
+      run = false;
+      printTable();
+    } else {
+      cout << "ok chao";
+      run = false;
+      printTable();
+    }
+    } // here ends the while
 
     return 0;
 }
