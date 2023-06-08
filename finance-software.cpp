@@ -212,7 +212,7 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
         << "a un interés del "
         << fixed << setprecision(2) << intial_data["interest"] * 100.0 << "% "
         << "durante "
-        << fixed << setprecision(0) << intial_data["time"] << " años. "
+        << fixed << setprecision(0) << intial_data["time"] << " meses. "
         << "Cuota inicial de "
         << fixed << setprecision(2) << intial_data["payment"] << "$. ";
 
@@ -231,11 +231,16 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     cout << setfill(' ') << setw(15) << "Total pagado";
     cout << endl;
 
+    int fTime;
+
     for(int month = 1; user_debt.haveDebt() ; month++){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
 
-        cout << setfill(' ') << setw(4) << setprecision(0) << data["time_passed"];
+        fTime = data["time_passed"];
+
+
+        cout << setfill(' ') << setw(4) << setprecision(0) << fTime;
         cout << setw(15) << data["current_debt_paid"];
         cout << setw(17) << setprecision(2) << data["current_interest_paid"];
         cout << setw(12) << data["ammount"];
@@ -248,6 +253,11 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
        cout << endl;
     }
 
+    cout << endl << endl << "La deuda se pago en " << setprecision(0)<< intial_data["time"] - fTime << " meses de "<< fTime << " disponibles" << endl;
+
+     
+}
+
     // create a report of the debt, with the following data:
     // In what time the debt was paid, what time left 
     // How much interest was paid 
@@ -255,7 +265,6 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     // How much was paid in total 
     // How much was paid in extraordinary payments 
     // What ammount of extraordinary payments was left 
-}
 
 int main(){
 
