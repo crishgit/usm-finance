@@ -126,7 +126,7 @@ public:
     }
 
     void passMonth() {
-        if( (this->time_passed) > (this->time) or (this->ammount) <= 0){
+        if( (this->time_passed) > (this->time) or (this->ammount) <= 0.0){
             return;
         }
 
@@ -137,19 +137,24 @@ public:
         int debt_result = abs(this->ammount - this->current_debt_paid);
         double epsilon_error_range = 0.00001;
 
-        if (debt_result < epsilon_error_range) {
+        if (debt_result < epsilon_error_range or 
+            (this->current_debt_paid > this->ammount)) {
+
           this->current_debt_paid = this->ammount;
-          this->ammount = 0;
+          this->ammount = 0.0;
         } else {
           this->ammount -= this->current_debt_paid;
         }
 
         this->current_extraordinary_pay = extraordinary_pays[this->time_passed];
         debt_result = abs(this->ammount - this->current_extraordinary_pay);
-        if (debt_result < epsilon_error_range) {
+        if (debt_result < epsilon_error_range or 
+            (this->current_extraordinary_pay > this->ammount) ) {
+
           this->real_extraordinary_pay = this->ammount;
-          this->ammount = 0;
-        } else {
+          this->ammount = 0.0;
+        }
+        else {
           this->real_extraordinary_pay = this->current_extraordinary_pay;
           this->ammount -= this->current_extraordinary_pay;
         }
@@ -159,7 +164,6 @@ public:
             this->current_debt_paid + this->real_extraordinary_pay;
         this->total_interest_paid += this->current_interest_paid;
     }
-
     map<string, double> getCurrentMonthData() {
         map<string, double> data;
 
@@ -241,14 +245,14 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
 
 
         cout << setfill(' ') << setw(4) << setprecision(0) << fTime;
-        cout << setw(15) << data["current_debt_paid"];
+        cout << setw(15) << setprecision(2) << data["current_debt_paid"];
         cout << setw(17) << setprecision(2) << data["current_interest_paid"];
-        cout << setw(12) << data["ammount"];
+        cout << setw(12) << setprecision(2) << data["ammount"];
         // cout << "Current extraordinary pay: " << data["current_extraordinary_pay"];
-        cout << setw(22) << data["real_extraordinary_pay"];
+        cout << setw(22) << setprecision(2) << data["real_extraordinary_pay"];
         // cout << << data["left_extraordinary_pay"];
-        cout << setw(22) << data["total_interest_paid"];
-        cout << setw(15) << data["total_debt_paid"] + data["total_interest_paid"];
+        cout << setw(22) << setprecision(2) << data["total_interest_paid"];
+        cout << setw(15) << setprecision(2) << data["total_debt_paid"] + data["total_interest_paid"];
       
        cout << endl;
     }
