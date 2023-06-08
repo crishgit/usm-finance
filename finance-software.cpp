@@ -256,13 +256,11 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
         // cout << << data["left_extraordinary_pay"];
         cout << setw(22) << setprecision(2) << fInterest;
         cout << setw(15) << setprecision(2) << data["total_debt_paid"] + data["total_interest_paid"];
-      
        cout << endl;
     }
 
-    cout << endl << "\n" << "La deuda se pago en " << setprecision(0)<< fTime << " meses de "<< intial_data["time"] << " disponibles." << endl;
-    cout << "Fue pagado un total de " << setprecision(2)<<  fInterest << " en intereses" << endl;
-    cout << "Sobro " << fleft << " de los pagos extraordinarios"; 
+    cout << "La deuda de " << intial_data["initial_debt"] << "$ se pago en " << setprecision(0)<< fTime << " meses de "<< intial_data["time"] << " disponibles." << endl;
+    cout << "Fue pagado un total de " << setprecision(2)<<  fInterest << " en intereses" << endl; 
 
      
 }
@@ -349,8 +347,10 @@ int main(){
         while(xpay == "si" or xpay == "s" or xpay == "y" or xpay == "Y"){
             int key;
             double value;
+            
 
             // remember put in a function later, maybe 
+            keyCorrect = false;
             while (keyCorrect == false){
               cout << "Ingrese numero del mes: ";
               cin >> key;
@@ -363,7 +363,8 @@ int main(){
                 }
             }
 
-            // remember put in a function later, maybe 
+            // remember put in a function later, maybe
+            valueCorrect = false;
             while (valueCorrect == false){
             cout << "Ingrese monto correspondiente al mes: ";
             cin >> value;
@@ -374,6 +375,12 @@ int main(){
               cout << endl <<"valor invalido, ingrese un valor correcto" <<endl;
               cin.ignore(100, '\n');
               }
+            }
+
+            if (extraordinary_pays.count(key) == 0) {
+              extraordinary_pays[key] = value;
+            } else {
+              extraordinary_pays[key] += value;
             }
 
             extraordinary_pays.insert(make_pair(key, value));
