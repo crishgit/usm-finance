@@ -262,7 +262,6 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     cout << "La deuda de " << intial_data["initial_debt"] << "$ se pago en " << setprecision(0)<< fTime << " meses de "<< intial_data["time"] << " disponibles." << endl;
     cout << "Fue pagado un total de " << setprecision(2)<<  fInterest << "$ en intereses" << endl;
     cout << "y ademas se pago " << fxpay << "$ en pagos extraordinarios" << endl;
-
      
 }
 
@@ -351,7 +350,7 @@ int main(){
             
 
             // remember put in a function later, maybe 
-            keyCorrect = false;
+            keyCorrect = false; 
             while (keyCorrect == false){
               cout << "Ingrese numero del mes: ";
               cin >> key;
@@ -391,6 +390,7 @@ int main(){
 
         run = false;
         printTable(debt, interest, time, extraordinary_pays);
+
     } 
     
     return 0;
