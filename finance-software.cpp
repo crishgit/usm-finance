@@ -236,7 +236,7 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     int fTime;
     double fInterest;
     double fdebt;
-    double fleft;
+    double fxpay = 0;
 
     for(int month = 1; user_debt.haveDebt() ; month++){
         user_debt.passMonth();
@@ -244,7 +244,7 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
 
         fTime = data["time_passed"];
         fInterest = data["total_interest_paid"];
-        fleft = data["left_extraordinary_pay"];
+        fxpay += data["real_extraordinary_pay"];  
 
 
         cout << setfill(' ') << setw(4) << setprecision(0) << fTime;
@@ -260,7 +260,8 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     }
 
     cout << "La deuda de " << intial_data["initial_debt"] << "$ se pago en " << setprecision(0)<< fTime << " meses de "<< intial_data["time"] << " disponibles." << endl;
-    cout << "Fue pagado un total de " << setprecision(2)<<  fInterest << " en intereses" << endl; 
+    cout << "Fue pagado un total de " << setprecision(2)<<  fInterest << "$ en intereses" << endl;
+    cout << "y ademas se pago " << fxpay << "$ en pagos extraordinarios" << endl;
 
      
 }
@@ -316,7 +317,7 @@ int main(){
  
       // remember put in a function later, maybe 
         while (interestCorrect == false){
-        cout << "Ingrese procentaje de interes: ";
+        cout << "Ingrese porcentaje de interes: ";
         cin >> interest;
         cin.clear();
         if (typeid(interest) == typeid(double) and interest > 0) {
