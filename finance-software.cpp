@@ -207,16 +207,14 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     // Reference format:
     // Préstamo de 20000.00$, a un interés del 3.00% durante 3 meses. Cuota inicial de 583.33$.
     // Cuota extraordinaria de 3000.00$ en el mes 12.
-    cout << endl << " Préstamo de " 
+    cout <<endl << " Préstamo de " 
         << fixed << setprecision(2) << intial_data["initial_debt"] << "$, "
         << "a un interés del "
         << fixed << setprecision(2) << intial_data["interest"] * 100.0 << "% "
         << "durante "
         << fixed << setprecision(0) << intial_data["time"] << " meses. "
         << "Cuota inicial de "
-        << fixed << setprecision(2) << intial_data["payment"] << "$. ";
-
-    cout << endl << endl << endl;
+        << fixed << setprecision(2) << intial_data["payment"] << "$. " << endl;
 
     // ------ Header ------- // 
     // Put Total Paid first  
@@ -232,12 +230,17 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
     cout << endl;
 
     int fTime;
+    double fInterest;
+    double fdebt;
+    double fleft;
 
     for(int month = 1; user_debt.haveDebt() ; month++){
         user_debt.passMonth();
         map<string, double> data = user_debt.getCurrentMonthData();
 
         fTime = data["time_passed"];
+        fInterest = data["total_interest_paid"];
+        fleft = data["left_extraordinary_pay"];
 
 
         cout << setfill(' ') << setw(4) << setprecision(0) << fTime;
@@ -247,13 +250,15 @@ void printTable(double ptDebt, int ptInterest, int ptMonth, map<int, double> &ex
         // cout << "Current extraordinary pay: " << data["current_extraordinary_pay"];
         cout << setw(22) << data["real_extraordinary_pay"];
         // cout << << data["left_extraordinary_pay"];
-        cout << setw(22) << data["total_interest_paid"];
+        cout << setw(22) << fInterest;
         cout << setw(15) << data["total_debt_paid"] + data["total_interest_paid"];
       
        cout << endl;
     }
 
-    cout << endl << endl << "La deuda se pago en " << setprecision(0)<< intial_data["time"] - fTime << " meses de "<< fTime << " disponibles" << endl;
+    cout << endl << "\n" << "La deuda se pago en " << setprecision(0)<< fTime << " meses de "<< intial_data["time"] << " disponibles." << endl;
+    cout << "Fue pagado un total de " << setprecision(2)<<  fInterest << " en intereses" << endl;
+    cout << "Sobro " << fleft << " de los pagos extraordinarios"; 
 
      
 }
