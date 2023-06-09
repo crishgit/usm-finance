@@ -228,24 +228,28 @@ public:
 };
 
 string to_string_with_N_decimals(double number, int decimals = 2){
-  stringstream ss;
-  ss << fixed << setprecision(decimals) << number;
-  return ss.str();
+    // flujo de string, el fixed le avisa que es de punto fijo para 
+    // los decimales, el setprecision es la cantidad de decimales
+    // luego le pasa el número. Devuelve el string del número.
+    stringstream ss;
+    ss << fixed << setprecision(decimals) << number;
+    return ss.str();
 }
 
 int main () {
     double ptDebt = 20000.0;
-    double ptInterest = 3;
-    int ptMonth = 3;
+    double ptInterest = 3.0;
+    int ptMonth = 24;
     map<int, double> extraordinary_pays = {
-        {2, 15000.0}
+        {12, 3000.0}
     };
 
     Debt user_debt(ptDebt, ptInterest, ptMonth, extraordinary_pays);
     Table table_debt(7);
-    table_debt.addRow({"Mes", "Deuda Pagada", "Interes Pagado", "Deuda", 
-                       "Pago Extraordinario", "Total Pagado Interes", 
-                       "Total Pagado"});
+    vector<string> header_debt_table = {"Mes", "Deuda Pagada", "Interes Pagado", "Deuda", 
+                          "Pago Extraordinario", "Total Pagado Interes", 
+                          "Total Pagado"};
+    table_debt.addRow(header_debt_table);
 
     while(user_debt.haveDebt() ){
         user_debt.passMonth();
