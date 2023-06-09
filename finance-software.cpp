@@ -245,9 +245,9 @@ int main () {
     };
 
     Debt user_debt(ptDebt, ptInterest, ptMonth, extraordinary_pays);
-    Table table_debt(7);
+    Table table_debt(7, 2);
     vector<string> header_debt_table = {"Mes", "Deuda Pagada", "Interes Pagado", "Deuda", 
-                          "Pago Extraordinario", "Total Pagado Interes", 
+                          "Pago Extraordinario", "Interes Total", 
                           "Total Pagado"};
     table_debt.addRow(header_debt_table);
 
